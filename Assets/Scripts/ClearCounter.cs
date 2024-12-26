@@ -1,35 +1,29 @@
 using UnityEngine;
 
-public class ClearCounter : MonoBehaviour
+public class ClearCounter : MonoBehaviour, IKitchenObjectParent
 {
     [SerializeField] private KitchenObjectSO kitchenObjectSO;
     [SerializeField] private Transform counterTop;
 
     private KitchenObject kitchenObject;
-    [SerializeField] private ClearCounter secondClearCounter;
 
-    [SerializeField] bool testing = false;
 
     private void Update()
     {
-        if(testing && Input.GetKey(KeyCode.T))
-        {
-            if(kitchenObject != null)
-            {
-                kitchenObject.SetClearCounter(secondClearCounter);
-            }
-        }
+       
     }
 
 
-    public void Interact()
+    public void Interact(Player player)
     {
         if (kitchenObject == null)
         {
             GameObject spawnedPrefab = Instantiate(kitchenObjectSO.prefab, counterTop);
-            spawnedPrefab.GetComponent<KitchenObject>().SetClearCounter(this);   
-        }else
+            spawnedPrefab.GetComponent<KitchenObject>().SetKitchenObjectParent(this);
+        }
+        else
         {
+            kitchenObject.SetKitchenObjectParent(player);
         }
     }
 
@@ -54,5 +48,5 @@ public class ClearCounter : MonoBehaviour
         kitchenObject = null;
     }
 
-    public bool HasKitchenObject => kitchenObject != null;  
+    public bool HasKitchenObject => kitchenObject != null;
 }
