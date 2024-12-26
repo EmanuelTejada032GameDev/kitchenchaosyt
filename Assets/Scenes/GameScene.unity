@@ -445,6 +445,12 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!4 &391633564 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 300224095579877000, guid: 0fe3736ab21dfe045a2c42018423fe90,
+    type: 3}
+  m_PrefabInstance: {fileID: 2054573908690390498}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -934,6 +940,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1345936351214457521, guid: 0fe3736ab21dfe045a2c42018423fe90,
+        type: 3}
+      propertyPath: kitchenObjectSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 16fcde6f8b7a69f4a9dcf280b2ec60a8,
+        type: 2}
     - target: {fileID: 2357132168870876945, guid: 0fe3736ab21dfe045a2c42018423fe90,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1043,6 +1055,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1345936351214457521, guid: 0fe3736ab21dfe045a2c42018423fe90,
+        type: 3}
+      propertyPath: counterTop
+      value: 
+      objectReference: {fileID: 391633564}
+    - target: {fileID: 1345936351214457521, guid: 0fe3736ab21dfe045a2c42018423fe90,
+        type: 3}
+      propertyPath: kitchenObjectSO
+      value: 
+      objectReference: {fileID: 11400000, guid: a570a277daa39b642a745f6911acf5fd,
+        type: 2}
     - target: {fileID: 2357132168870876945, guid: 0fe3736ab21dfe045a2c42018423fe90,
         type: 3}
       propertyPath: m_LocalPosition.x
