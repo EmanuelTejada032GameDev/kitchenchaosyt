@@ -13,11 +13,11 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     Vector3 lastInteractionDir = new Vector3 (0, 0, 0);
     [SerializeField] private LayerMask clearCounterLayerMask;
 
-    private ClearCounter selectedCounter;
+    private BaseCounter selectedCounter;
     public EventHandler<OnSelectCounterChangedEventArgs> OnSelectedCounterChanged;
     public class OnSelectCounterChangedEventArgs
     {
-        public ClearCounter selectedCounter;
+        public BaseCounter selectedCounter;
     };
 
     [SerializeField] private KitchenObject kitchenObject;
@@ -64,11 +64,11 @@ public class Player : MonoBehaviour, IKitchenObjectParent
         
         if (Physics.Raycast(transform.position, lastInteractionDir, out RaycastHit hitInfo, interactionDistance, clearCounterLayerMask))
         {
-            if(hitInfo.transform.TryGetComponent(out ClearCounter clearCounter))
+            if(hitInfo.transform.TryGetComponent(out BaseCounter baseCounter))
             {
-                if(clearCounter != selectedCounter)
+                if(baseCounter != selectedCounter)
                 {
-                    SetSelectedCounter(clearCounter);
+                    SetSelectedCounter(baseCounter);
                 }
             }else
             {
@@ -124,7 +124,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
         transform.forward = Vector3.Slerp(transform.forward, moveDirection, Time.deltaTime * rotationSpeed);
     }
 
-    private void SetSelectedCounter(ClearCounter selectedCounter)
+    private void SetSelectedCounter(BaseCounter selectedCounter)
     {
         this.selectedCounter = selectedCounter;
         OnSelectedCounterChanged?.Invoke(this, new OnSelectCounterChangedEventArgs { selectedCounter = selectedCounter });
