@@ -1810,6 +1810,29 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 0ee365573b544504b81dc279b7a2e614,
         type: 2}
+    - target: {fileID: 3415133691867974014, guid: c643ee3569b49e8449439fb980889c3f,
+        type: 3}
+      propertyPath: cuttingRecipesSO.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3415133691867974014, guid: c643ee3569b49e8449439fb980889c3f,
+        type: 3}
+      propertyPath: cuttingRecipesSO.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: a10dd1171da005542a469f14527ef4e9,
+        type: 2}
+    - target: {fileID: 3415133691867974014, guid: c643ee3569b49e8449439fb980889c3f,
+        type: 3}
+      propertyPath: cuttingRecipesSO.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 684e33cbc9210e64f89b5c2ab3e3cdc7,
+        type: 2}
+    - target: {fileID: 3415133691867974014, guid: c643ee3569b49e8449439fb980889c3f,
+        type: 3}
+      propertyPath: cuttingRecipesSO.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 48f87552f9163fa45b1a80056c44c164,
+        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

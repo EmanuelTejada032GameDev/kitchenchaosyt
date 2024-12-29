@@ -1,8 +1,9 @@
+using System;
 using UnityEngine;
 
 public class CuttingCounter : BaseCounter
 {
-    [SerializeField] private KitchenObjectSO kitchenObjectSO;
+    [SerializeField] private CuttingRecipeSO[] cuttingRecipesSO;
 
     public override void Interact(Player player)
     {
@@ -11,6 +12,7 @@ public class CuttingCounter : BaseCounter
             // There is no KitchenObject here
             if (player.HasKitchenObject)
             {
+                if(HasCuttingRecipeWithInputKitchenObject(player.GetKitchenObject().KitchenObjectSO))
                 // Player is carrying something
                 player.GetKitchenObject().SetKitchenObjectParent(this);
             }
@@ -35,12 +37,38 @@ public class CuttingCounter : BaseCounter
     }
 
 
+
     public override void InteractAlternate()
     {
         if (HasKitchenObject)
         {
-            GetKitchenObject().DestroySelf();
-            KitchenObject.SpawnKitchenObject(kitchenObjectSO, this);
+            if (HasCuttingRecipeWithInputKitchenObject(GetKitchenObject().KitchenObjectSO))
+            {
+                KitchenObjectSO outputKitchenObjectSO = GetKitchenObjectOutput(GetKitchenObject().KitchenObjectSO);
+                GetKitchenObject().DestroySelf();
+                KitchenObject.SpawnKitchenObject(outputKitchenObjectSO, this);
+            }
+           
         }
+    }
+
+    private KitchenObjectSO GetKitchenObjectOutput(KitchenObjectSO kitchenObjectSO)
+    {
+        foreach (var cuttingRecipeSO in cuttingRecipesSO)
+        {
+            if (cuttingRecipeSO.input == kitchenObjectSO) return cuttingRecipeSO.output;
+        }
+
+        return null;
+    }
+
+    private bool HasCuttingRecipeWithInputKitchenObject(KitchenObjectSO kitchenObjectSO)
+    {
+        foreach (var cuttingRecipeSO in cuttingRecipesSO)
+        {
+            if (cuttingRecipeSO.input == kitchenObjectSO) return true;
+        }
+
+        return false;
     }
 }
