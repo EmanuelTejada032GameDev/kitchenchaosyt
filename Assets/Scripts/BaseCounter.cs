@@ -10,6 +10,10 @@ public class BaseCounter : MonoBehaviour, IKitchenObjectParent
         Debug.LogError("This should never be called");
     }
 
+    public virtual void InteractAlternate() {
+        Debug.LogError("This should never be called");
+    }
+
     public Transform GetKitchenObjectFollowTransform()
     {
         return counterTop;
