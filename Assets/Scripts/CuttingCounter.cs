@@ -5,6 +5,16 @@ public class CuttingCounter : BaseCounter
 {
     [SerializeField] private CuttingRecipeSO[] cuttingRecipesSO;
 
+    private int cuttingProgress = 0;
+
+    public EventHandler<OnCuttingProgressChangedEventsArgs> OnCuttingProgressChanged;
+    public class OnCuttingProgressChangedEventsArgs
+    {
+        public float cuttingProgressNormalized;
+    }
+
+    public EventHandler OnCut;
+
     public override void Interact(Player player)
     {
         if (!HasKitchenObject)
@@ -12,9 +22,13 @@ public class CuttingCounter : BaseCounter
             // There is no KitchenObject here
             if (player.HasKitchenObject)
             {
-                if(HasCuttingRecipeWithInputKitchenObject(player.GetKitchenObject().KitchenObjectSO))
-                // Player is carrying something
-                player.GetKitchenObject().SetKitchenObjectParent(this);
+                if (HasCuttingRecipeWithInputKitchenObject(player.GetKitchenObject().KitchenObjectSO))
+                {
+                    // Player is carrying something
+                    player.GetKitchenObject().SetKitchenObjectParent(this);
+                    ResetCuttingProgress();
+                }
+
             }
             else
             {
@@ -32,6 +46,7 @@ public class CuttingCounter : BaseCounter
             {
                 // Player is not carrying anything
                 GetKitchenObject().SetKitchenObjectParent(player);
+                ResetCuttingProgress();
             }
         }
     }
@@ -44,9 +59,22 @@ public class CuttingCounter : BaseCounter
         {
             if (HasCuttingRecipeWithInputKitchenObject(GetKitchenObject().KitchenObjectSO))
             {
-                KitchenObjectSO outputKitchenObjectSO = GetKitchenObjectOutput(GetKitchenObject().KitchenObjectSO);
-                GetKitchenObject().DestroySelf();
-                KitchenObject.SpawnKitchenObject(outputKitchenObjectSO, this);
+                CuttingRecipeSO cuttingRecipeSO  = GetCuttingRecipeSOWithInput(GetKitchenObject().KitchenObjectSO);
+                cuttingProgress++;
+
+                OnCut?.Invoke(this, EventArgs.Empty);
+
+                OnCuttingProgressChanged?.Invoke(this,new OnCuttingProgressChangedEventsArgs { 
+                    cuttingProgressNormalized = (float)cuttingProgress / cuttingRecipeSO.cuttingProgressMax 
+                });
+
+                if(cuttingProgress >= cuttingRecipeSO.cuttingProgressMax)
+                {
+                    KitchenObjectSO outputKitchenObjectSO = GetKitchenObjectOutput(GetKitchenObject().KitchenObjectSO);
+                    GetKitchenObject().DestroySelf();
+                    KitchenObject.SpawnKitchenObject(outputKitchenObjectSO, this);
+                    ResetCuttingProgress();
+                }
             }
            
         }
@@ -54,21 +82,33 @@ public class CuttingCounter : BaseCounter
 
     private KitchenObjectSO GetKitchenObjectOutput(KitchenObjectSO kitchenObjectSO)
     {
-        foreach (var cuttingRecipeSO in cuttingRecipesSO)
-        {
-            if (cuttingRecipeSO.input == kitchenObjectSO) return cuttingRecipeSO.output;
-        }
-
+        CuttingRecipeSO cuttingRecipeSO = GetCuttingRecipeSOWithInput(kitchenObjectSO);
+        if (cuttingRecipeSO != null) return cuttingRecipeSO.output;
         return null;
     }
 
     private bool HasCuttingRecipeWithInputKitchenObject(KitchenObjectSO kitchenObjectSO)
     {
+        CuttingRecipeSO cuttingRecipeSO = GetCuttingRecipeSOWithInput(kitchenObjectSO);
+        return cuttingRecipeSO != null;
+    }
+
+    private CuttingRecipeSO GetCuttingRecipeSOWithInput(KitchenObjectSO kitchenObjectSO)
+    {
         foreach (var cuttingRecipeSO in cuttingRecipesSO)
         {
-            if (cuttingRecipeSO.input == kitchenObjectSO) return true;
+            if (cuttingRecipeSO.input == kitchenObjectSO) return cuttingRecipeSO;
         }
+        
+        return null;
+    }
 
-        return false;
+    private void ResetCuttingProgress()
+    {
+        cuttingProgress = 0;
+        OnCuttingProgressChanged?.Invoke(this, new OnCuttingProgressChangedEventsArgs
+        {
+            cuttingProgressNormalized = 0
+        });
     }
 }
