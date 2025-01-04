@@ -1,27 +1,36 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using static IHasProgress;
 
 public class ProgressBarUI : MonoBehaviour
 {
     [SerializeField] private Image barImage;
-    [SerializeField] private CuttingCounter CuttingCounter;
+
+    [SerializeField] private GameObject IHasProgressParentGasmeObject;
+    private IHasProgress hasProgressItem;
 
     private void Start()
     {
-        CuttingCounter.OnCuttingProgressChanged += CuttingProgressChanged;
+        hasProgressItem = IHasProgressParentGasmeObject.GetComponent<IHasProgress>();
+        if(hasProgressItem == null)
+        {
+            Debug.LogError($"ProgressParent Game object {IHasProgressParentGasmeObject} does not implements IHassProgress");
+        }
+
+        hasProgressItem.OnProgressChanged += IHasProgressItem_OnProgressChanged;
         barImage.fillAmount = 0;
         Hide();
     }
 
-    private void CuttingProgressChanged(object sender, CuttingCounter.OnCuttingProgressChangedEventsArgs e)
+    private void IHasProgressItem_OnProgressChanged(object sender, OnProgressChangedEventsArgs e)
     {
-        barImage.fillAmount = e.cuttingProgressNormalized;
+        barImage.fillAmount = e.progressNormalized;
 
-        if(barImage.fillAmount == 0)
+        if (barImage.fillAmount == 0)
             Hide();
-        else 
-            Show(); 
+        else
+            Show();
     }
 
     private void Show()

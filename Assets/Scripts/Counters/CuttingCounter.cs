@@ -1,19 +1,18 @@
 using System;
 using UnityEngine;
+using static IHasProgress;
 
-public class CuttingCounter : BaseCounter
+public class CuttingCounter : BaseCounter, IHasProgress
 {
     [SerializeField] private CuttingRecipeSO[] cuttingRecipesSO;
 
     private int cuttingProgress = 0;
 
-    public EventHandler<OnCuttingProgressChangedEventsArgs> OnCuttingProgressChanged;
-    public class OnCuttingProgressChangedEventsArgs
-    {
-        public float cuttingProgressNormalized;
-    }
+    public event EventHandler<OnProgressChangedEventsArgs> OnProgressChanged;
+   
 
     public EventHandler OnCut;
+
 
     public override void Interact(Player player)
     {
@@ -64,8 +63,8 @@ public class CuttingCounter : BaseCounter
 
                 OnCut?.Invoke(this, EventArgs.Empty);
 
-                OnCuttingProgressChanged?.Invoke(this,new OnCuttingProgressChangedEventsArgs { 
-                    cuttingProgressNormalized = (float)cuttingProgress / cuttingRecipeSO.cuttingProgressMax 
+                OnProgressChanged?.Invoke(this,new OnProgressChangedEventsArgs { 
+                    progressNormalized = (float)cuttingProgress / cuttingRecipeSO.cuttingProgressMax 
                 });
 
                 if(cuttingProgress >= cuttingRecipeSO.cuttingProgressMax)
@@ -106,9 +105,9 @@ public class CuttingCounter : BaseCounter
     private void ResetCuttingProgress()
     {
         cuttingProgress = 0;
-        OnCuttingProgressChanged?.Invoke(this, new OnCuttingProgressChangedEventsArgs
+        OnProgressChanged?.Invoke(this, new OnProgressChangedEventsArgs
         {
-            cuttingProgressNormalized = 0
+            progressNormalized = cuttingProgress
         });
     }
 }
