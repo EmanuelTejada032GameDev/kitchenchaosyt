@@ -7,11 +7,11 @@ public class BaseCounter : MonoBehaviour, IKitchenObjectParent
 
 
     public virtual void Interact(Player player) {
-        Debug.LogError("This should never be called");
+        Debug.LogError("This should never be called, Base Interact");
     }
 
     public virtual void InteractAlternate() {
-        Debug.LogError("This should never be called");
+        //Debug.LogError("This should never be called");
     }
 
     public Transform GetKitchenObjectFollowTransform()
