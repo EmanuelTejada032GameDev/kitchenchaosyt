@@ -29,7 +29,6 @@ public class PlatesCounter : BaseCounter
             if (platesSpawned == maxPlateToSpawn) return;
             platesSpawned++;
             OnPlateSpawned?.Invoke(this, EventArgs.Empty);
-            Debug.Log("Spawning plate");
         }
     }
 
