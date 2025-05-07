@@ -9,21 +9,26 @@ public class PlateKitchenObject : KitchenObject
         public KitchenObjectSO KitchenObjectSO;
     }
 
-    private List<KitchenObjectSO> kitchenObjectsSOs;
+    private List<KitchenObjectSO> kitchenObjectsSOList;
     public List<KitchenObjectSO> validPlateKitchenObjects;
 
     private void Awake()
     {
-        kitchenObjectsSOs = new List<KitchenObjectSO>();
+        kitchenObjectsSOList = new List<KitchenObjectSO>();
     }
 
     public bool TryAddIngredient(KitchenObjectSO kitchenObjectSO)
     {
         if (!validPlateKitchenObjects.Contains(kitchenObjectSO)) return false;
-        if (kitchenObjectsSOs.Contains(kitchenObjectSO)) return false;
-        kitchenObjectsSOs.Add(kitchenObjectSO);
+        if (kitchenObjectsSOList.Contains(kitchenObjectSO)) return false;
+        kitchenObjectsSOList.Add(kitchenObjectSO);
         OnIngredientAdded?.Invoke(this,new OnIngredientAddedEventArgs { KitchenObjectSO = kitchenObjectSO});
         return true;
+    }
+
+    public List<KitchenObjectSO> GetKitchenObjectSOList()
+    {
+        return kitchenObjectsSOList;
     }
 
 }
