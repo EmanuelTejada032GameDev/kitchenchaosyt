@@ -6,6 +6,11 @@ public class PlateIngredientsUI : MonoBehaviour
     [SerializeField] private PlateKitchenObject plate;
     [SerializeField] private Transform iconTemplate;
 
+    private void Awake()
+    {
+        iconTemplate.gameObject.SetActive(false);
+    }
+
     private void Start()
     {
         plate.OnIngredientAdded += PlateKitchenObject_OnIngredientAdded;
