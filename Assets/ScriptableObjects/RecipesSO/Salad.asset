@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Salad
   m_EditorClassIdentifier: 
   ingredients:
-  - {fileID: 11400000, guid: a570a277daa39b642a745f6911acf5fd, type: 2}
+  - {fileID: 11400000, guid: 0ee365573b544504b81dc279b7a2e614, type: 2}
   - {fileID: 11400000, guid: 283918f2cc3ef72459a06ff28c0c0543, type: 2}
   recipeName: Salad
