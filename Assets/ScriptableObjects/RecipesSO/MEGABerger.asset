@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cbeb2ff2f0567247a016d0aa3d7b8e3, type: 3}
+  m_Name: MEGABerger
+  m_EditorClassIdentifier: 
+  ingredients:
+  - {fileID: 11400000, guid: c2684d53578b2924cb592b308e57875a, type: 2}
+  - {fileID: 11400000, guid: c632edceb73321e45a1d0fe4fa9d07d4, type: 2}
+  - {fileID: 11400000, guid: 822606f220fea074883e470cca440bd4, type: 2}
+  - {fileID: 11400000, guid: 0ee365573b544504b81dc279b7a2e614, type: 2}
+  - {fileID: 11400000, guid: 283918f2cc3ef72459a06ff28c0c0543, type: 2}
+  recipeName: MEGABerger
