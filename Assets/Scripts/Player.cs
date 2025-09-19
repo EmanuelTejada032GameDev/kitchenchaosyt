@@ -23,6 +23,9 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     [SerializeField] private KitchenObject kitchenObject;
     [SerializeField] private Transform kitchenObjectHoldPoint;
 
+    public EventHandler OnPickedSomething;
+
+
 
     private void Awake()
     {
@@ -149,6 +152,10 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     public void SetKitchenObject(KitchenObject kitchenObject)
     {
         this.kitchenObject = kitchenObject;
+        if(kitchenObject != null)
+        {
+            OnPickedSomething?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     public KitchenObject GetKitchenObject()

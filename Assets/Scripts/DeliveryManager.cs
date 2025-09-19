@@ -7,6 +7,7 @@ public class DeliveryManager : MonoBehaviour
     public static DeliveryManager Instance { get; private set; }
     public event EventHandler OnRecipeSpawned;
     public event EventHandler OnRecipeCompleted;
+    public event EventHandler OnRecipeDeliverFailed;
 
     [SerializeField] private RecipeListSO recipeListSO;
     private List<RecipeSO> waitingRecipeSOList;
@@ -106,6 +107,7 @@ public class DeliveryManager : MonoBehaviour
         }
 
         //Debug.Log("Wrong Order Delivered");
+        OnRecipeDeliverFailed?.Invoke(this, EventArgs.Empty);
     }
 
     public List<RecipeSO> GetWaitingRecipeList()
