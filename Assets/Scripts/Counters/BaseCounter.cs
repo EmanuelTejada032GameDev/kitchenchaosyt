@@ -7,6 +7,11 @@ public class BaseCounter : MonoBehaviour, IKitchenObjectParent
     private KitchenObject kitchenObject;
     public static EventHandler OnAnyItemDroppedHere;
 
+    public static void ResetStaticData()
+    {
+        OnAnyItemDroppedHere = null;
+    }
+
     public virtual void Interact(Player player) {
         Debug.LogError("This should never be called, Base Interact");
     }
