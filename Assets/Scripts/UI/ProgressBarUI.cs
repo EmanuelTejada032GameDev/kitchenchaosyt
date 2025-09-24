@@ -1,45 +1,49 @@
-using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static IHasProgress;
 
-public class ProgressBarUI : MonoBehaviour
-{
+public class ProgressBarUI : MonoBehaviour {
+
+
+    [SerializeField] private GameObject hasProgressGameObject;
     [SerializeField] private Image barImage;
 
-    [SerializeField] private GameObject IHasProgressParentGasmeObject;
-    private IHasProgress hasProgressItem;
 
-    private void Start()
-    {
-        hasProgressItem = IHasProgressParentGasmeObject.GetComponent<IHasProgress>();
-        if(hasProgressItem == null)
-        {
-            Debug.LogError($"ProgressParent Game object {IHasProgressParentGasmeObject} does not implements IHassProgress");
+    private IHasProgress hasProgress;
+
+
+    private void Start() {
+        hasProgress = hasProgressGameObject.GetComponent<IHasProgress>();
+        if (hasProgress == null) {
+            Debug.LogError("Game Object " + hasProgressGameObject + " does not have a component that implements IHasProgress!");
         }
 
-        hasProgressItem.OnProgressChanged += IHasProgressItem_OnProgressChanged;
-        barImage.fillAmount = 0;
+        hasProgress.OnProgressChanged += HasProgress_OnProgressChanged;
+
+        barImage.fillAmount = 0f;
+
         Hide();
     }
 
-    private void IHasProgressItem_OnProgressChanged(object sender, OnProgressChangedEventsArgs e)
-    {
+    private void HasProgress_OnProgressChanged(object sender, IHasProgress.OnProgressChangedEventArgs e) {
         barImage.fillAmount = e.progressNormalized;
 
-        if (barImage.fillAmount == 0)
+        if (e.progressNormalized == 0f || e.progressNormalized == 1f) {
             Hide();
-        else
+        } else {
             Show();
+        }
     }
 
-    private void Show()
-    {
+    private void Show() {
         gameObject.SetActive(true);
     }
 
-    private void Hide()
-    {
+    private void Hide() {
         gameObject.SetActive(false);
     }
+
+
+
 }

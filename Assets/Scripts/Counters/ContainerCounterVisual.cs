@@ -1,24 +1,29 @@
-using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class ContainerCounterVisual : MonoBehaviour
-{
-    private Animator animator;
-    [SerializeField] private ContainerCounter containerCounter;
+public class ContainerCounterVisual : MonoBehaviour {
+
+
     private const string OPEN_CLOSE = "OpenClose";
 
-    private void Awake()
-    {
-        animator = GetComponent<Animator>();    
+
+    [SerializeField] private ContainerCounter containerCounter;
+
+
+    private Animator animator;
+
+
+    private void Awake() {
+        animator = GetComponent<Animator>();
     }
 
-    private void Start()
-    {
-        containerCounter.OnContainerCounterInteract += OnContainerCounterInteract;
+    private void Start() {
+        containerCounter.OnPlayerGrabbedObject += ContainerCounter_OnPlayerGrabbedObject;
     }
 
-    private void OnContainerCounterInteract(object sender, EventArgs e)
-    {
+    private void ContainerCounter_OnPlayerGrabbedObject(object sender, System.EventArgs e) {
         animator.SetTrigger(OPEN_CLOSE);
     }
+
 }
